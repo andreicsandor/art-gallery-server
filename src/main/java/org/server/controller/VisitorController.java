@@ -34,7 +34,6 @@ public class VisitorController {
 
     @GetMapping("/filter-exhibits")
     public ResponseEntity<?> filterExhibits(@RequestBody FilterDTO filterDTO) {
-
         List<Exhibit> exhibits = null;
 
         if (filterDTO.getFilterType().equals("Name")) {
