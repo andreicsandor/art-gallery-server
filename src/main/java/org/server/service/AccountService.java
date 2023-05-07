@@ -6,6 +6,7 @@ import org.server.model.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,6 +14,10 @@ public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    public List<Account> getAccounts() {
+        return this.accountRepository.findAll();
+    }
 
     public Boolean createAccount(AccountDTO accountDTO) {
         Account account = new Account(
@@ -62,7 +67,7 @@ public class AccountService {
         }
     }
 
-    public Account getCredentials(String name, String password) {
+    public Account authenticate(String name, String password) {
         Account account = accountRepository.findByUsername(name);
         if (account != null && account.getPassword().equals(password)) {
             return account;
