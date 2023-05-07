@@ -11,6 +11,9 @@ import java.util.List;
 @Repository
 public interface ExhibitRepository extends JpaRepository<Exhibit, Long> {
 
+    @Query("SELECT e FROM Exhibit e ORDER BY e.year")
+    List<Exhibit> findAll();
+
     @Query("SELECT e FROM Exhibit e WHERE e.name = :name AND e.artist = :artist")
     Exhibit findByNameArtist(@Param("name") String keywordName, @Param("artist") String keywordArtist);
 
