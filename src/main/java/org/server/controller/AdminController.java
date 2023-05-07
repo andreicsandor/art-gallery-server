@@ -21,13 +21,13 @@ public class AdminController {
     @GetMapping("/accounts")
     public ResponseEntity<?> getAccounts() {
         List<Account> accounts = accountService.getAccounts();
-        Map<String, String> response = new HashMap<>();
 
         if (!accounts.isEmpty()) {
             return ResponseEntity.ok(accounts);
         } else {
+            Map<String, String> response = new HashMap<>();
             response.put("message", "No accounts found.");
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 
