@@ -13,23 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class EmployeeController {
-
-    @Autowired
-    private ExhibitService exhibitService;
-
-    @GetMapping("/exhibits")
-    public ResponseEntity<?> getExhibits() {
-        List<Exhibit> exhibits = exhibitService.getExhibits();
-        Map<String, String> response = new HashMap<>();
-
-        if (!exhibits.isEmpty()) {
-            return ResponseEntity.ok(exhibits);
-        } else {
-            response.put("message", "No exhibits found.");
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
-        }
-    }
+public class EmployeeController extends VisitorController {
 
     @PostMapping("/create-exhibit")
     public ResponseEntity<?> createExhibit(@RequestBody ExhibitDTO exhibitDTO) {
