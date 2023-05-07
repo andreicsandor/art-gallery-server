@@ -2,12 +2,15 @@ package org.server.service;
 
 import org.server.dto.AccountDTO;
 import org.server.model.Account;
+import org.server.model.Exhibit;
 import org.server.model.Gallery;
 import org.server.model.repository.AccountRepository;
 import org.server.model.repository.GalleryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -21,6 +24,12 @@ public class AccountService {
 
     public List<Account> getAccounts() {
         return this.accountRepository.findAll();
+    }
+
+    public List<Account> filterByRole(String role) {
+        List<Account> accounts = this.accountRepository.findByRole(role);
+        Collections.sort(accounts, Comparator.comparing(Account::getLastName));
+        return accounts;
     }
 
     public Boolean createAccount(AccountDTO accountDTO) {

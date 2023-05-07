@@ -1,7 +1,9 @@
 package org.server.controller;
 
 import org.server.dto.AccountDTO;
+import org.server.dto.FilterDTO;
 import org.server.model.Account;
+import org.server.model.Exhibit;
 import org.server.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +20,30 @@ public class AdminController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("/accounts")
+    @GetMapping("/get-accounts")
     public ResponseEntity<?> getAccounts() {
         List<Account> accounts = accountService.getAccounts();
 
         if (!accounts.isEmpty()) {
+            return ResponseEntity.ok(accounts);
+        } else {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "No accounts found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
+
+    @GetMapping("/filter-accounts")
+    public ResponseEntity<?> filterAccounts(@RequestBody FilterDTO filterDTO) {
+        List<Account> accounts = null;
+
+        if (filterDTO.getFilterType().equals("Role")) {
+            // Returns the exhibits that contain the name phrase
+            String role = filterDTO.getFilterKeyword();
+            accounts = accountService.filterByRole(role);
+        }
+
+        if (accounts != null && !accounts.isEmpty()) {
             return ResponseEntity.ok(accounts);
         } else {
             Map<String, String> response = new HashMap<>();
