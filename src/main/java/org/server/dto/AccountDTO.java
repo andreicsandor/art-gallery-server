@@ -8,16 +8,18 @@ public class AccountDTO {
     private String role;
     private String username;
     private String password;
+    private String gallery;
 
     public AccountDTO() {
     }
 
-    public AccountDTO(String firstName, String lastName, String role, String username, String password) {
+    public AccountDTO(String firstName, String lastName, String role, String username, String password, String gallery) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
         this.username = username;
         this.password = password;
+        this.gallery = gallery;
     }
 
     public String getFirstName() {
@@ -58,6 +60,14 @@ public class AccountDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getGallery() {
+        return gallery;
+    }
+
+    public void setGallery(String gallery) {
+        this.gallery = gallery;
     }
 
     @Override

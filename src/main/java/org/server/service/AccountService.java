@@ -2,7 +2,9 @@ package org.server.service;
 
 import org.server.dto.AccountDTO;
 import org.server.model.Account;
+import org.server.model.Gallery;
 import org.server.model.repository.AccountRepository;
+import org.server.model.repository.GalleryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private GalleryRepository galleryRepository;
 
     public List<Account> getAccounts() {
         return this.accountRepository.findAll();
@@ -29,6 +34,11 @@ public class AccountService {
         );
 
         try {
+            if (account.getRole().equals("Employee")) {
+                String galleryName = accountDTO.getGallery();
+                Gallery gallery = galleryRepository.findByName(galleryName);
+                gallery.addEmployee(account);
+            }
             this.accountRepository.save(account);
             return Boolean.TRUE;
         } catch (Exception e) {
@@ -37,18 +47,47 @@ public class AccountService {
     }
 
     public Boolean updateAccount(Long accountId, AccountDTO accountDTO) {
-        Optional<Account> optionalAccount = this.accountRepository.findById(accountId);
+        Account oldAccount = this.accountRepository.findById(accountId).orElse(null);
 
-        if (optionalAccount.isPresent()) {
-            Account account = optionalAccount.get();
-            account.setFirstName(accountDTO.getFirstName());
-            account.setLastName(accountDTO.getLastName());
-            account.setRole(accountDTO.getRole());
-            account.setUsername(accountDTO.getUsername());
-            account.setPassword(accountDTO.getPassword());
+        if (oldAccount != null) {
+            Account updatedAccount = oldAccount;
+            updatedAccount.setFirstName(accountDTO.getFirstName());
+            updatedAccount.setLastName(accountDTO.getLastName());
+            updatedAccount.setRole(accountDTO.getRole());
+            updatedAccount.setUsername(accountDTO.getUsername());
+            updatedAccount.setPassword(accountDTO.getPassword());
 
             try {
-                this.accountRepository.save(account);
+                if (oldAccount.getRole().equals("Employee")) {
+                    // Find the associated gallery
+                    Gallery oldGallery = galleryRepository.findByEmployee(oldAccount);
+
+                    // Remove the old account from the gallery
+                    oldGallery.removeEmployee(oldAccount);
+
+                    // Save the updated gallery
+                    this.galleryRepository.save(oldGallery);
+                }
+
+                if (updatedAccount.getRole().equals("Employee")) {
+                    // Find the associated gallery
+                    Gallery newGallery = galleryRepository.findByName(accountDTO.getGallery());
+
+                    // Save the updated account
+                    this.accountRepository.save(updatedAccount);
+
+                    // Add the updated account to the gallery
+                    newGallery.addEmployee(updatedAccount);
+
+                    // Save the updated gallery
+                    this.galleryRepository.save(newGallery);
+
+                    // Return value and exit function
+                    return Boolean.TRUE;
+                }
+
+                // Save the updated account
+                this.accountRepository.save(updatedAccount);
                 return Boolean.TRUE;
             } catch (Exception e) {
                 return Boolean.FALSE;
