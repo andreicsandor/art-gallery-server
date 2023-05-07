@@ -14,6 +14,9 @@ public interface ExhibitRepository extends JpaRepository<Exhibit, Long> {
     @Query("SELECT e FROM Exhibit e WHERE e.name = :name AND e.artist = :artist")
     Exhibit findByNameArtist(@Param("name") String keywordName, @Param("artist") String keywordArtist);
 
+    @Query("SELECT e FROM Exhibit e WHERE e.name LIKE %:name%")
+    List<Exhibit> findByName(String name);
+
     List<Exhibit> findByArtist(String artist);
 
     List<Exhibit> findByType(String type);

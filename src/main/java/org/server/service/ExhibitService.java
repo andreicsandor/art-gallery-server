@@ -27,6 +27,24 @@ public class ExhibitService {
         return exhibits;
     }
 
+    public List<Exhibit> filterByName(String name) {
+        List<Exhibit> exhibits = this.exhibitRepository.findByName(name);
+        Collections.sort(exhibits, Comparator.comparingInt(Exhibit::getYear));
+        return exhibits;
+    }
+
+    public List<Exhibit> filterByArtist(String artist) {
+        List<Exhibit> exhibits = this.exhibitRepository.findByArtist(artist);
+        Collections.sort(exhibits, Comparator.comparingInt(Exhibit::getYear));
+        return exhibits;
+    }
+
+    public List<Exhibit> filterByType(String type) {
+        List<Exhibit> exhibits = this.exhibitRepository.findByType(type);
+        Collections.sort(exhibits, Comparator.comparingInt(Exhibit::getYear));
+        return exhibits;
+    }
+
     public Boolean createExhibit(ExhibitDTO exhibitDTO) {
         Exhibit exhibit = new Exhibit(
             exhibitDTO.getName(),
