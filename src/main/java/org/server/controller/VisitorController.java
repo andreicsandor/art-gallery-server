@@ -1,15 +1,12 @@
 package org.server.controller;
 
-import org.server.dto.ExhibitDTO;
 import org.server.dto.FilterDTO;
-import org.server.model.Exhibit;
 import org.server.service.ExhibitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +18,7 @@ public class VisitorController {
 
     @GetMapping("/api/get-exhibits")
     public ResponseEntity<?> getExhibits() {
-        List<Exhibit> exhibits = exhibitService.getExhibits();
+        List<Map<String, Object>> exhibits = exhibitService.getExhibits();
 
         if (!exhibits.isEmpty()) {
             return ResponseEntity.ok(exhibits);
@@ -34,7 +31,7 @@ public class VisitorController {
 
     @GetMapping("/api/filter-exhibits")
     public ResponseEntity<?> filterExhibits(@RequestBody FilterDTO filterDTO) {
-        List<Exhibit> exhibits = null;
+        List<Map<String, Object>> exhibits = null;
 
         if (filterDTO.getFilterType().equals("Name")) {
             // Returns the exhibits that contain the name phrase

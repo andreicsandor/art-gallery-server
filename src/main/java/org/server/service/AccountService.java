@@ -2,16 +2,13 @@ package org.server.service;
 
 import org.server.dto.AccountDTO;
 import org.server.model.Account;
-import org.server.model.Exhibit;
 import org.server.model.Gallery;
 import org.server.model.repository.AccountRepository;
 import org.server.model.repository.GalleryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class AccountService {
@@ -22,14 +19,51 @@ public class AccountService {
     @Autowired
     private GalleryRepository galleryRepository;
 
-    public List<Account> getAccounts() {
-        return this.accountRepository.findAll();
+    public Map<String, Object> pairGallery(Account account, String gallery) {
+        Map<String, Object> pair = new HashMap<>();
+        pair.put("profile", account);
+        pair.put("gallery", gallery);
+        return pair;
     }
 
-    public List<Account> filterByRole(String role) {
+    public List<Map<String, Object>> getAccounts() {
+        List<Account> accounts = this.accountRepository.findAll();
+        List<Map<String, Object>> detailedAccounts = new ArrayList<>();
+
+        for (Account account : accounts) {
+            Gallery gallery = galleryRepository.findByEmployee(account);
+            String galleryName;
+            if (gallery != null) {
+                galleryName = gallery.getName();
+            } else {
+                galleryName = "—";
+            }
+
+            Map<String, Object> detailedAccount = pairGallery(account, galleryName);
+            detailedAccounts.add(detailedAccount);
+        }
+
+        return detailedAccounts;
+    }
+
+    public List<Map<String, Object>> filterByRole(String role) {
         List<Account> accounts = this.accountRepository.findByRole(role);
-        Collections.sort(accounts, Comparator.comparing(Account::getLastName));
-        return accounts;
+        List<Map<String, Object>> detailedAccounts = new ArrayList<>();
+
+        for (Account account : accounts) {
+            Gallery gallery = galleryRepository.findByEmployee(account);
+            String galleryName;
+            if (gallery != null) {
+                galleryName = gallery.getName();
+            } else {
+                galleryName = "—";
+            }
+
+            Map<String, Object> detailedAccount = pairGallery(account, galleryName);
+            detailedAccounts.add(detailedAccount);
+        }
+
+        return detailedAccounts;
     }
 
     public Boolean createAccount(AccountDTO accountDTO) {

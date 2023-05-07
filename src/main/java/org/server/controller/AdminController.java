@@ -2,8 +2,6 @@ package org.server.controller;
 
 import org.server.dto.AccountDTO;
 import org.server.dto.FilterDTO;
-import org.server.model.Account;
-import org.server.model.Exhibit;
 import org.server.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +20,7 @@ public class AdminController {
 
     @GetMapping("/api/get-accounts")
     public ResponseEntity<?> getAccounts() {
-        List<Account> accounts = accountService.getAccounts();
+        List<Map<String, Object>> accounts = accountService.getAccounts();
 
         if (!accounts.isEmpty()) {
             return ResponseEntity.ok(accounts);
@@ -35,7 +33,7 @@ public class AdminController {
 
     @GetMapping("/api/filter-accounts")
     public ResponseEntity<?> filterAccounts(@RequestBody FilterDTO filterDTO) {
-        List<Account> accounts = null;
+        List<Map<String, Object>> accounts = null;
 
         if (filterDTO.getFilterType().equals("Role")) {
             // Returns the exhibits that contain the name phrase

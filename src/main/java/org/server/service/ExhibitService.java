@@ -8,9 +8,7 @@ import org.server.model.repository.GalleryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ExhibitService {
@@ -21,28 +19,67 @@ public class ExhibitService {
     @Autowired
     private GalleryRepository galleryRepository;
 
-    public List<Exhibit> getExhibits() {
+    public Map<String, Object> pairGallery(Exhibit exhibit, String gallery) {
+        Map<String, Object> pair = new HashMap<>();
+        pair.put("item", exhibit);
+        pair.put("gallery", gallery);
+        return pair;
+    }
+
+    public List<Map<String, Object>> getExhibits() {
         List<Exhibit> exhibits = this.exhibitRepository.findAll();
-        Collections.sort(exhibits, Comparator.comparingInt(Exhibit::getYear));
-        return exhibits;
+        List<Map<String, Object>> detailedExhibits = new ArrayList<>();
+
+        for (Exhibit exhibit : exhibits) {
+            String gallery = galleryRepository.findByExhibit(exhibit).getName();
+
+            Map<String, Object> detailedExhibit = pairGallery(exhibit, gallery);
+            detailedExhibits.add(detailedExhibit);
+        }
+
+        return detailedExhibits;
     }
 
-    public List<Exhibit> filterByName(String name) {
+    public List<Map<String, Object>> filterByName(String name) {
         List<Exhibit> exhibits = this.exhibitRepository.findByName(name);
-        Collections.sort(exhibits, Comparator.comparingInt(Exhibit::getYear));
-        return exhibits;
+        List<Map<String, Object>> detailedExhibits = new ArrayList<>();
+
+        for (Exhibit exhibit : exhibits) {
+            String gallery = galleryRepository.findByExhibit(exhibit).getName();
+
+            Map<String, Object> detailedExhibit = pairGallery(exhibit, gallery);
+            detailedExhibits.add(detailedExhibit);
+        }
+
+        return detailedExhibits;
     }
 
-    public List<Exhibit> filterByArtist(String artist) {
+    public List<Map<String, Object>> filterByArtist(String artist) {
         List<Exhibit> exhibits = this.exhibitRepository.findByArtist(artist);
-        Collections.sort(exhibits, Comparator.comparingInt(Exhibit::getYear));
-        return exhibits;
+        List<Map<String, Object>> detailedExhibits = new ArrayList<>();
+
+        for (Exhibit exhibit : exhibits) {
+            String gallery = galleryRepository.findByExhibit(exhibit).getName();
+
+            Map<String, Object> detailedExhibit = pairGallery(exhibit, gallery);
+            detailedExhibits.add(detailedExhibit);
+        }
+
+        return detailedExhibits;
     }
 
-    public List<Exhibit> filterByType(String type) {
+    public List<Map<String, Object>> filterByType(String type) {
         List<Exhibit> exhibits = this.exhibitRepository.findByType(type);
-        Collections.sort(exhibits, Comparator.comparingInt(Exhibit::getYear));
-        return exhibits;
+        List<Map<String, Object>> detailedExhibits = new ArrayList<>();
+
+        for (Exhibit exhibit : exhibits) {
+            String gallery = galleryRepository.findByExhibit(exhibit).getName();
+
+            Map<String, Object> detailedExhibit = pairGallery(exhibit, gallery);
+            detailedExhibits.add(detailedExhibit);
+        }
+
+        return detailedExhibits;
     }
 
     public Boolean createExhibit(ExhibitDTO exhibitDTO) {
