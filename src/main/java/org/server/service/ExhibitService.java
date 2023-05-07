@@ -8,6 +8,8 @@ import org.server.model.repository.GalleryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -20,7 +22,9 @@ public class ExhibitService {
     private GalleryRepository galleryRepository;
 
     public List<Exhibit> getExhibits() {
-        return this.exhibitRepository.findAll();
+        List<Exhibit> exhibits = this.exhibitRepository.findAll();
+        Collections.sort(exhibits, Comparator.comparingInt(Exhibit::getYear));
+        return exhibits;
     }
 
     public Boolean createExhibit(ExhibitDTO exhibitDTO) {
