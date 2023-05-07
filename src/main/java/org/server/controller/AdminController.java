@@ -20,7 +20,7 @@ public class AdminController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("/get-accounts")
+    @GetMapping("/api/get-accounts")
     public ResponseEntity<?> getAccounts() {
         List<Account> accounts = accountService.getAccounts();
 
@@ -33,7 +33,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/filter-accounts")
+    @GetMapping("/api/filter-accounts")
     public ResponseEntity<?> filterAccounts(@RequestBody FilterDTO filterDTO) {
         List<Account> accounts = null;
 
@@ -52,7 +52,7 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/create-account")
+    @PostMapping("/api/create-account")
     public ResponseEntity<?> createAccount(@RequestBody AccountDTO accountDTO) {
         // Convert DTO to Account entity and call the service layer
         Boolean success = accountService.createAccount(accountDTO);
@@ -68,7 +68,7 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/update-account/{accountID}")
+    @PutMapping("/api/update-account/{accountID}")
     public ResponseEntity<?> updateAccount(@PathVariable Long accountID, @RequestBody AccountDTO accountDTO) {
         // Convert DTO to Account entity and call the service layer
         Boolean success = accountService.updateAccount(accountID, accountDTO);
@@ -84,7 +84,7 @@ public class AdminController {
         }
     }
 
-    @DeleteMapping("/delete-account/{accountID}")
+    @DeleteMapping("/api/delete-account/{accountID}")
     public ResponseEntity<?> deleteAccount(@PathVariable Long accountID) {
         // Convert DTO to Account entity and call the service layer
         Boolean success = accountService.deleteAccount(accountID);

@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 public class EmployeeController extends VisitorController {
 
-    @PostMapping("/create-exhibit")
+    @PostMapping("/api/create-exhibit")
     public ResponseEntity<?> createExhibit(@RequestBody ExhibitDTO exhibitDTO) {
         // Convert DTO to Exhibit entity and call the service layer
         Boolean success = exhibitService.createExhibit(exhibitDTO);
@@ -31,7 +31,7 @@ public class EmployeeController extends VisitorController {
         }
     }
 
-    @PutMapping("/update-exhibit/{exhibitID}")
+    @PutMapping("/api/update-exhibit/{exhibitID}")
     public ResponseEntity<?> updateExhibit(@PathVariable Long exhibitID, @RequestBody ExhibitDTO exhibitDTO) {
         // Convert DTO to Exhibit entity and call the service layer
         Boolean success = exhibitService.updateExhibit(exhibitID, exhibitDTO);
@@ -47,7 +47,7 @@ public class EmployeeController extends VisitorController {
         }
     }
 
-    @DeleteMapping("/delete-exhibit/{exhibitID}")
+    @DeleteMapping("/api/delete-exhibit/{exhibitID}")
     public ResponseEntity<?> deleteExhibit(@PathVariable Long exhibitID) {
         // Convert DTO to Exhibit entity and call the service layer
         Boolean success = exhibitService.deleteExhibit(exhibitID);

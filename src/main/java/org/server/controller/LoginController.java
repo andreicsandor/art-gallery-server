@@ -18,7 +18,7 @@ public class LoginController {
     @Autowired
     private AccountService accountService;
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginDTO loginDTO) {
         Map<String, String> response = new HashMap<>();
         try {

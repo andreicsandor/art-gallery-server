@@ -19,7 +19,7 @@ public class VisitorController {
     @Autowired
     protected ExhibitService exhibitService;
 
-    @GetMapping("/get-exhibits")
+    @GetMapping("/api/get-exhibits")
     public ResponseEntity<?> getExhibits() {
         List<Exhibit> exhibits = exhibitService.getExhibits();
 
@@ -32,7 +32,7 @@ public class VisitorController {
         }
     }
 
-    @GetMapping("/filter-exhibits")
+    @GetMapping("/api/filter-exhibits")
     public ResponseEntity<?> filterExhibits(@RequestBody FilterDTO filterDTO) {
         List<Exhibit> exhibits = null;
 
