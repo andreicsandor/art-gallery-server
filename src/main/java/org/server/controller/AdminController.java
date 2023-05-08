@@ -35,12 +35,13 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/api/filter-accounts")
+    @PostMapping("/api/filter-accounts")
     public ResponseEntity<?> filterAccounts(@RequestBody FilterDTO filterDTO) {
         List<Map<String, Object>> accounts = null;
 
         if (filterDTO.getFilterType().equals("Role")) {
             // Returns the exhibits that contain the name phrase
+            System.out.println(filterDTO);
             String role = filterDTO.getFilterKeyword();
             accounts = accountService.filterByRole(role);
         }
