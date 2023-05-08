@@ -41,7 +41,6 @@ public class AdminController {
 
         if (filterDTO.getFilterType().equals("Role")) {
             // Returns the exhibits that contain the name phrase
-            System.out.println(filterDTO);
             String role = filterDTO.getFilterKeyword();
             accounts = accountService.filterByRole(role);
         }
