@@ -41,7 +41,7 @@ public class ExhibitService {
     }
 
     public List<Map<String, Object>> filterByName(String name) {
-        List<Exhibit> exhibits = this.exhibitRepository.findByName(name);
+        List<Exhibit> exhibits = this.exhibitRepository.findByName(name.toLowerCase());
         List<Map<String, Object>> detailedExhibits = new ArrayList<>();
 
         for (Exhibit exhibit : exhibits) {
