@@ -3,6 +3,7 @@ package org.server.controller;
 import org.server.dto.AccountDTO;
 import org.server.dto.FilterDTO;
 import org.server.service.AccountService;
+import org.server.service.GalleryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ public class AdminController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private GalleryService galleryService;
 
     @GetMapping("/api/get-accounts")
     public ResponseEntity<?> getAccounts() {
@@ -95,6 +99,19 @@ public class AdminController {
         } else {
             response.put("message", "Failed to delete account.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @GetMapping("/api/get-galleries")
+    public ResponseEntity<?> getGalleries() {
+        List<String> galleries = galleryService.getGalleryNames();
+
+        if (!galleries.isEmpty()) {
+            return ResponseEntity.ok(galleries);
+        } else {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "No galleries found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 }
