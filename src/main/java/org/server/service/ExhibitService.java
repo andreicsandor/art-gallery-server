@@ -82,6 +82,19 @@ public class ExhibitService {
         return detailedExhibits;
     }
 
+    public List<String> getArtistNames() {
+        List<Exhibit> exhibits = this.exhibitRepository.findAll();
+
+        Set<String> artistsSet = new HashSet<>();
+        for (Exhibit exhibit : exhibits) {
+            artistsSet.add(exhibit.getArtist());
+        }
+
+        List<String> artists = new ArrayList<>(artistsSet);
+
+        return artists;
+    }
+
     public Boolean createExhibit(ExhibitDTO exhibitDTO) {
         Exhibit exhibit = new Exhibit(
             exhibitDTO.getName(),

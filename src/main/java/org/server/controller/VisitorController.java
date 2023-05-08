@@ -56,4 +56,16 @@ public class VisitorController {
         }
     }
 
+    @GetMapping("/api/get-artists")
+    public ResponseEntity<?> getArtists() {
+        List<String> artists = exhibitService.getArtistNames();
+
+        if (!artists.isEmpty()) {
+            return ResponseEntity.ok(artists);
+        } else {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "No artists found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
 }
