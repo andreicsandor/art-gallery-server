@@ -92,7 +92,8 @@ public class AccountService {
         Account oldAccount = this.accountRepository.findById(accountId).orElse(null);
 
         if (oldAccount != null) {
-            Account updatedAccount = oldAccount;
+            Account updatedAccount = new Account();
+            updatedAccount.setId(oldAccount.getId());
             updatedAccount.setFirstName(accountDTO.getFirstName());
             updatedAccount.setLastName(accountDTO.getLastName());
             updatedAccount.setRole(accountDTO.getRole());
@@ -111,6 +112,9 @@ public class AccountService {
                     this.galleryRepository.save(oldGallery);
                 }
 
+                // Save the updated account
+                this.accountRepository.save(updatedAccount);
+
                 if (updatedAccount.getRole().equals("Employee")) {
                     // Find the associated gallery
                     Gallery newGallery = galleryRepository.findByName(accountDTO.getGallery());
@@ -128,8 +132,6 @@ public class AccountService {
                     return Boolean.TRUE;
                 }
 
-                // Save the updated account
-                this.accountRepository.save(updatedAccount);
                 return Boolean.TRUE;
             } catch (Exception e) {
                 return Boolean.FALSE;
