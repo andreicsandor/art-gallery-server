@@ -29,7 +29,7 @@ public class VisitorController {
         }
     }
 
-    @GetMapping("/api/filter-exhibits")
+    @PostMapping("/api/filter-exhibits")
     public ResponseEntity<?> filterExhibits(@RequestBody FilterDTO filterDTO) {
         List<Map<String, Object>> exhibits = null;
 
