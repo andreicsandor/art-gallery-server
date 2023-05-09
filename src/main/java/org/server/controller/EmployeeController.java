@@ -2,6 +2,7 @@ package org.server.controller;
 
 import org.server.dto.ExhibitDTO;
 import org.server.dto.ItemDTO;
+import org.server.model.Item;
 import org.server.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -82,6 +84,19 @@ public class EmployeeController extends VisitorController {
         } else {
             response.put("message", "Failed to sell item.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @GetMapping("/api/get-items")
+    public ResponseEntity<?> getItems() {
+        List<Item> items = itemService.getItems();
+
+        if (!items.isEmpty()) {
+            return ResponseEntity.ok(items);
+        } else {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "No items found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 }
