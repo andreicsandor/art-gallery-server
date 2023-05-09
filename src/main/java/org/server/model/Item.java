@@ -5,7 +5,11 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "Item")
-public class Item extends Exhibit {
+public class Item extends Artwork {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     @Column(name = "price", nullable = false)
     private double price;
 
@@ -27,6 +31,14 @@ public class Item extends Exhibit {
         this.buyer = buyer;
         this.saleDate = saleDate;
         this.deliveryDate = deliveryDate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public double getPrice() {

@@ -5,32 +5,16 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name="Exhibit", uniqueConstraints={@UniqueConstraint(columnNames = {"name", "artist"})})
-public class Exhibit {
+public class Exhibit extends Artwork {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
-
-    @Column(name = "artist", nullable = false, length = 25)
-    private String artist;
-
-    @Column(name = "type", nullable = false, length = 50)
-    private String type;
-
-    @Column(name = "year", nullable = false, length = 50)
-    private int year;
-
     public Exhibit() {}
 
     public Exhibit(String name, String artist, String type, int year) {
-        this.name = name;
-        this.artist = artist;
-        this.type = type;
-        this.year = year;
+        super(name, artist, type, year);
     }
 
     public Long getId() {
@@ -39,38 +23,6 @@ public class Exhibit {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getArtist() {
-        return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 
     @Override
