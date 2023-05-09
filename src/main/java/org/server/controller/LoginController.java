@@ -24,9 +24,11 @@ public class LoginController {
         try {
             Account account = accountService.authenticate(loginDTO.getUsername(), loginDTO.getPassword());
             if (account != null) {
+                String gallery = accountService.getAccountGallery(account);
                 response.put("message", "Login successful.");
                 response.put("username", account.getUsername());
                 response.put("role", account.getRole());
+                response.put("gallery", gallery);
                 return ResponseEntity.status(HttpStatus.OK).body(response);
             } else {
                 response.put("message", "Invalid username or password.");

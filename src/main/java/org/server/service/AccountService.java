@@ -26,6 +26,22 @@ public class AccountService {
         return pair;
     }
 
+    public String getAccountGallery(Account account) {
+        String galleryName;
+        try {
+            Gallery gallery = galleryRepository.findByEmployee(account);
+            if (gallery != null) {
+                galleryName = gallery.getName();
+            } else {
+                galleryName = "–";
+            }
+        } catch (Exception e) {
+            galleryName = "–";
+        }
+
+        return galleryName;
+    }
+
     public List<Map<String, Object>> getAccounts() {
         List<Account> accounts = this.accountRepository.findAll();
         List<Map<String, Object>> detailedAccounts = new ArrayList<>();
