@@ -65,7 +65,7 @@ public class EmployeeController extends VisitorController {
         }
     }
 
-    @PostMapping("/api/sell-item/")
+    @PostMapping("/api/sell-item/{exhibitID}")
     public ResponseEntity<?> sellItem(@PathVariable Long exhibitID, @RequestBody ItemDTO itemDTO) {
         // Convert Item DTO to Exhibit entity and call the service layer
         Boolean sellSuccess = itemService.createItem(itemDTO);
