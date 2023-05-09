@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name="Exhibit", uniqueConstraints={@UniqueConstraint(columnNames = {"name", "artist"})})
 public class Exhibit {
     @Id
