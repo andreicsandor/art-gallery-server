@@ -25,6 +25,7 @@ public class LoginController {
             Account account = accountService.authenticate(loginDTO.getUsername(), loginDTO.getPassword());
             if (account != null) {
                 response.put("message", "Login successful.");
+                response.put("username", account.getUsername());
                 response.put("role", account.getRole());
                 return ResponseEntity.status(HttpStatus.OK).body(response);
             } else {
