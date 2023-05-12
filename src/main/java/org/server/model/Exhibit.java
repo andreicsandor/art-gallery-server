@@ -11,6 +11,9 @@ public class Exhibit extends Artwork {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     public Exhibit() {}
 
     public Exhibit(String name, String artist, String type, int year) {
@@ -23,6 +26,14 @@ public class Exhibit extends Artwork {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getImage() {
+        return imageUrl;
+    }
+
+    public void setImage(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override

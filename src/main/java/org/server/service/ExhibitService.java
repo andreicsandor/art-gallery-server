@@ -131,6 +131,7 @@ public class ExhibitService {
             updatedExhibit.setArtist(exhibitDTO.getArtist());
             updatedExhibit.setType(exhibitDTO.getType());
             updatedExhibit.setYear(exhibitDTO.getYear());
+            updatedExhibit.setImage(exhibitDTO.getImage());
 
             try {
                 // Find the old associated gallery
