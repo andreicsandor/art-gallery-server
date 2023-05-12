@@ -6,18 +6,9 @@ public class ExhibitDTO {
     private String type;
     private int year;
     private String gallery;
-
     private String image;
 
     public ExhibitDTO() {
-    }
-
-    public ExhibitDTO(String name, String artist, String type, int year, String gallery) {
-        this.name = name;
-        this.artist = artist;
-        this.type = type;
-        this.year = year;
-        this.gallery = gallery;
     }
 
     public ExhibitDTO(String name, String artist, String type, int year, String gallery, String image) {
@@ -73,7 +64,7 @@ public class ExhibitDTO {
         return image;
     }
 
-    public void setImage(String imageUrl) {
-        this.image = imageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

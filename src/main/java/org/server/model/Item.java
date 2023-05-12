@@ -25,7 +25,7 @@ public class Item extends Artwork {
     public Item() {
     }
 
-    public Item(String name, String artist, String type, int year, double price, String buyer, LocalDate saleDate, LocalDate deliveryDate) {
+    public Item(String name, String artist, String type, int year, String image, double price, String buyer, LocalDate saleDate, LocalDate deliveryDate) {
         super(name, artist, type, year);
         this.price = price;
         this.buyer = buyer;

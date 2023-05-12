@@ -11,8 +11,8 @@ public class ItemDTO extends ExhibitDTO {
     public ItemDTO() {
     }
 
-    public ItemDTO(String name, String artist, String type, int year, String gallery, double price, String buyer, LocalDate saleDate, LocalDate deliveryDate) {
-        super(name, artist, type, year, gallery);
+    public ItemDTO(String name, String artist, String type, int year, String gallery, String image, double price, String buyer, LocalDate saleDate, LocalDate deliveryDate) {
+        super(name, artist, type, year, gallery, image);
         this.price = price;
         this.buyer = buyer;
         this.saleDate = saleDate;

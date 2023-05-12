@@ -29,6 +29,7 @@ public class ItemService {
             itemDTO.getArtist(),
             itemDTO.getType(),
             itemDTO.getYear(),
+            itemDTO.getImage(),
             itemDTO.getPrice(),
             itemDTO.getBuyer(),
             itemDTO.getSaleDate(),
